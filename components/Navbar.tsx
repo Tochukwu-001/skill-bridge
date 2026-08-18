@@ -18,6 +18,7 @@ export default function Navbar (){
             label: "Contact Us",
             url: "/contact"
         },
+        //
 
          {
             label: "Explore Skills",
