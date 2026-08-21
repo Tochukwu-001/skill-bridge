@@ -39,3 +39,8 @@ export default function Navbar() {
     </main>
   )
 }
+
+
+
+
+// project proposal and get navbar ready
