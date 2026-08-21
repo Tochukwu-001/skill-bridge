@@ -7,7 +7,7 @@ export default function Home() {
     <main>
       Home Page
       <CiUser className="text-7xl text-purple-700" />
-      <Button variant="contained">Hello world</Button>
+      {/* <Button variant="contained">Hello world</Button> */}
     </main>
   );
 }

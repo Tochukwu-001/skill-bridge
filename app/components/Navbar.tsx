@@ -1,7 +1,10 @@
+"use client"
 import Link from "next/link"
 import Image from "next/image"
+import { useState } from "react"
 
 export default function Navbar() {
+  const [navOpen, setNavOpen] = useState(false)
 
   const navItems: object[] = [
     { label: "Home", url: "/" },
@@ -34,7 +37,16 @@ export default function Navbar() {
         <div className="flex items-center gap-5 max-lg:hidden">
           <Link href={"#"} className="text-xl border-2 px-2 rounded-sm hover:bg-[#EBE3A7] transition-all duration-200">Advertise Skill</Link>
           <Link href={"#"} className="flex text-xl items-center gap-1 bg-[#2E2910] text-white px-3 rounded-sm border-2 border-[#2E2910] py-1 group">Register</Link>
-          
+        </div>
+
+        <button onClick={() => setNavOpen (!navOpen)} className="text-2xl lg:hidden z-50">
+          {
+            navOpen ? "x" : "menu"
+          }
+        </button>
+        {/* {Mobile and tab nav} */}
+        <div className={`lg:hidden bg-white`}>
+
         </div>
     </main>
   )
