@@ -1,8 +1,12 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { FiUserPlus } from "react-icons/fi";
 import { CgMenuRightAlt } from "react-icons/cg";
+import { MdClose } from "react-icons/md";
+import {useState} from "react";
 export default function Navbar (){
+    const [navOpen, setNavOpen] = useState(false);
     const navItems: object[] = [
         {
             label: "Home",
@@ -21,7 +25,7 @@ export default function Navbar (){
         //
 
          {
-            label: "Explore Skills",
+            label: "Explore",
             url: "/explore"
         }
     ]
@@ -41,7 +45,7 @@ export default function Navbar (){
             <div className="flex items-center gap-5 max-lg:hidden">
                 {
                     navItems.map((item, index)=> (
-                        <Link key={index} href={item.url} className="text-xl hover:text-[#2E2910] transition-all duration-200">{item.label}</Link>
+                        <Link key={index} href={item?.url} className="text-xl hover:text-[#2E2910] transition-all duration-200">{item?.label}</Link>
                     ))
                 }
             </div>
@@ -51,9 +55,13 @@ export default function Navbar (){
                 <Link href={"#"} className="items-center flex gap-1 text-xl bg-[darkGreen] text-white px-3 py-1 rounded-sm border border-[#2E2910] group "><FiUserPlus className="group-hover:-translate-x-0.5 transition-all duration-200"/>Register</Link>
             </div>
 
-            <button className="text-2xl lg:hidden">
-                <CgMenuRightAlt />
+            <button onClick={()=> setNavOpen(!navOpen)} className="text-2xl lg:hidden">
+                { 
+                    navOpen ? <MdClose/> : <CgMenuRightAlt/>
+                }                  
             </button>
+
+            
         </main>
     )
 }
