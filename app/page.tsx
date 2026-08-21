@@ -1,11 +1,13 @@
-import Image from "next/image";
+import { CiUser } from "react-icons/ci";
+import Button from '@mui/material/Button';
+
 
 export default function Home() {
   return (
     <main>
-      Home page
-      {/* <CiUser className= "text-7xl text-purple-600" />
-      <Button variant ="contained">Hello World</Button> */}
+      Home Page
+      <CiUser className="text-7xl text-purple-700" />
+      <Button variant="contained">Hello world</Button>
     </main>
   );
 }
