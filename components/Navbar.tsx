@@ -49,7 +49,7 @@ export default function Navbar (){
                 }
             </div>
             <div className="flex items-center gap-5 max-lg:hidden">
-                <Link href={"#"} className="text-xl border px-3 rounded-sm py-1 hover:bg-[#EBE3A7] transition-all duration-200">Advertise Skills</Link>
+                <Link href={"/advertise"} className="text-xl border px-3 rounded-sm py-1 hover:bg-[#EBE3A7] transition-all duration-200">Advertise Skills</Link>
                 <Link href={"/auth"} className="flex items-center text-xl gap-1 bg-[#2E2910] text-white px-3 rounded-sm border border-[#2E2910] py-1 group"><FiUser className="group-hover:-translate-x-0.5 transition-all duration-200" /> Register</Link>
             </div>
 
@@ -69,7 +69,7 @@ export default function Navbar (){
                     }
                 </article>
                 <div className="flex items-center gap-5 flex-col">
-                <Link href={"#"} className="text-2xl border px-3 rounded-sm py-1 hover:bg-[#EBE3A7] transition-all duration-200">Advertise Skills</Link>
+                <Link href={"/advertise"} className="text-2xl border px-3 rounded-sm py-1 hover:bg-[#EBE3A7] transition-all duration-200">Advertise Skills</Link>
                 <Link href={"/auth"} className="flex items-center text-2xl gap-1 bg-[#2E2910] text-white px-3 rounded-sm border border-[#2E2910] py-1 group"><FiUser className="group-hover:-translate-x-0.5 transition-all duration-200" /> Register</Link>
             </div>
             </div>
