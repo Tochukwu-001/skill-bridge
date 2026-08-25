@@ -1,20 +1,33 @@
 "use client"
 import { Field, Form, Formik } from "formik";
 import { CiPaperplane } from "react-icons/ci";
+ import * as Yup from 'yup';
+
 
 export default function Advertise() {
+
+    const initVal = {
+        name: "",
+        cat: "",
+        desc: "",
+        job: "",
+        res: ""
+    }
+
     return (
         <main className="min-h-dvh">
             <section>
-                <Formik>
+                <Formik
+                    initialValues={initVal}
+                >
                     <Form>
                         <div>
                             <label htmlFor="">Name of Skill:</label>
-                            <Field/>
+                            <Field name="name"/>
                         </div>
                         <div>
                             <label htmlFor="">Skill Category</label>
-                            <Field as="select">
+                            <Field name="cat" as="select">
                                 <option value="it">Information Technology</option>
                                 <option value="agric">Agriculture</option>
                                 <option value="sandm">Sales and Marketing</option>
@@ -31,17 +44,17 @@ export default function Advertise() {
 
                         <div>
                             <label htmlFor="">Skill Description</label>
-                            <Field as="textarea"/>
+                            <Field name="desc" as="textarea"/>
                         </div>
 
                         <div>
                             <label htmlFor="">Job Opportunities</label>
-                            <Field/>
+                            <Field name="job"/>
                         </div>
 
                         <div>
                             <label htmlFor="">Additional Resources</label>
-                            <Field/>
+                            <Field name="res"/>
                         </div>
 
                         <button type="submit">
