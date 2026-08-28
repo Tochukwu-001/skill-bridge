@@ -14,11 +14,19 @@ export default function Advertise() {
         res: ""
     }
 
+    const valSchema = Yup.object({
+        name: Yup.string().max(50, "Exceeded number of characters(50)").required("This is a required field"),
+        cat: Yup.string().required("This is a required field"),
+        desc: Yup.string().required("This is a required field"),
+        job: Yup.string().required("This is a required field"),
+    })
+
     return (
         <main className="min-h-dvh">
             <section>
                 <Formik
                     initialValues={initVal}
+                    validationSchema={valSchema}
                 >
                     <Form>
                         <div>
