@@ -1,5 +1,5 @@
 "use client"
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, ErrorMessage } from "formik";
 import { CiPaperplane } from "react-icons/ci";
  import * as Yup from 'yup';
 
@@ -27,11 +27,13 @@ export default function Advertise() {
                 <Formik
                     initialValues={initVal}
                     validationSchema={valSchema}
+                    onSubmit={(values) => {console.log(values)}}
                 >
                     <Form>
                         <div>
                             <label htmlFor="">Name of Skill:</label>
                             <Field name="name"/>
+                            <ErrorMessage name="name" component={'P'}/>
                         </div>
                         <div>
                             <label htmlFor="">Skill Category</label>
@@ -48,16 +50,19 @@ export default function Advertise() {
                                 <option value="pubs">Public Speaking</option>
                                 <option value="other">Other</option>
                             </Field>
+                            <ErrorMessage name="cat" component={'P'}/>
                         </div>
 
                         <div>
                             <label htmlFor="">Skill Description</label>
                             <Field name="desc" as="textarea"/>
+                            <ErrorMessage name="desc" component={'P'}/>
                         </div>
 
                         <div>
                             <label htmlFor="">Job Opportunities</label>
                             <Field name="job"/>
+                            <ErrorMessage name="job" component={'P'}/>
                         </div>
 
                         <div>
