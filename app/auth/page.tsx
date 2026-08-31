@@ -2,18 +2,16 @@ import { Theme } from "@/components/Theme";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import {auth, signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
 import { redirect } from "next/navigation";
 
 export default async function Auth() {
-  const session = await auth ()
-  console.log(session);
 
-  if (session) {
+  const session = await auth()
+  // console.log(session);
+    
+  if(session){
     redirect("/advertise")
-  }
-  
-
   }
 
   return (
@@ -38,12 +36,11 @@ export default async function Auth() {
             className="text-4xl font-extrabold tracking-tight leading-tight"
             style={{ color: Theme.lightYellow }}
           >
-            {isSignUp
-              ? "Join the Community of Practitioners."
-              : "Welcome Back to SkillBridge."}
+            Join the Community of Practitioners.
           </h1>
           <p className="text-gray-300 text-lg leading-relaxed">
-            Connect with peers, share your expertise, unlock opportunities, and bridge the gap between learning and achieving.
+            Connect with peers, share your expertise, unlock opportunities, and
+            bridge the gap between learning and achieving.
           </p>
         </div>
 
@@ -69,36 +66,25 @@ export default async function Auth() {
             >
               SkillBridge
             </Link>
-            <h2
-              className="text-3xl font-bold tracking-tight"
-              style={{ color: Theme.darkGreen }}
-            >
-              {isSignUp ? "Create an account" : "Sign in to your account"}
-            </h2>
-            <p className="text-sm text-slate-600">
-              {isSignUp
-                ? "Start sharing your skills and discovering opportunities"
-                : "Enter your credentials to access your dashboard"}
-            </p>
           </div>
 
           {/* OAuth Buttons */}
           <div className="grid grid-cols-2 gap-4">
             <form
-      action={async () => {
-        "use server"
-        await signIn("google")
-      }}
-    >
-    </form>
-            <button
-              type="submit"
-              className="flex items-center justify-center gap-3 py-3 px-4 rounded-xl border bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm"
-              style={{ borderColor: `${Theme.darkGreen}20` }}
+              action={async () => {
+                "use server";
+                await signIn("google");
+              }}
             >
-              <FcGoogle className="text-xl" />
-              <span>Google</span>
-            </button>
+              <button
+                type="submit"
+                className="flex items-center justify-center gap-3 py-3 px-4 rounded-xl border bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm w-full"
+                style={{ borderColor: `${Theme.darkGreen}20` }}
+              >
+                <FcGoogle className="text-xl" />
+                <span>Google</span>
+              </button>
+            </form>
 
             <button
               type="button"
@@ -118,9 +104,8 @@ export default async function Auth() {
             </span>
           </div>
 
-          {/* Native HTML Form using Server Action */}
-          <form action={handleAuth} className="space-y-5">
-            {isSignUp && (
+          {/* Form mapped to Server Action */}
+          <form className="space-y-5">
               <div>
                 <label
                   htmlFor="name"
@@ -137,7 +122,6 @@ export default async function Auth() {
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 bg-white text-sm"
                 />
               </div>
-            )}
 
             <div>
               <label
@@ -164,15 +148,13 @@ export default async function Auth() {
                 >
                   Password
                 </label>
-                {!isSignUp && (
                   <Link
-                    href="#"
+                    href="/forgot-password"
                     className="text-xs font-semibold hover:underline"
                     style={{ color: Theme.darkGreen }}
                   >
                     Forgot password?
                   </Link>
-                )}
               </div>
               <input
                 id="password"
@@ -189,20 +171,13 @@ export default async function Auth() {
               className="w-full py-3.5 px-4 rounded-xl text-white font-bold text-sm shadow-md transition-transform active:scale-[0.98] hover:opacity-95"
               style={{ backgroundColor: Theme.darkGreen }}
             >
-              {isSignUp ? "Create Account" : "Sign In"}
+              Create Account
             </button>
           </form>
 
-          {/* Toggle View via URL Navigation (Pure Server-Side Link Toggle) */}
+          {/* Toggle View using URL Query Params */}
           <p className="text-center text-sm text-slate-600">
-            {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
-            <Link
-              href={isSignUp ? "/auth" : "/auth?mode=signup"}
-              className="font-bold hover:underline"
-              style={{ color: Theme.darkGreen }}
-            >
-              {isSignUp ? "Sign In" : "Sign Up"}
-            </Link>
+            Already have an account?
           </p>
         </div>
       </div>
