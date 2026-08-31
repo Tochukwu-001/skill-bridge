@@ -2,14 +2,17 @@ import { Theme } from "@/components/Theme";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
+import { redirect } from "next/navigation";
 
-export default function Auth({
-  searchParams,
-}: {
-  searchParams?: { mode?: string };
-}) {
+export default async function Auth() {
 
+  const session = await auth()
+  // console.log(session);
+    
+  if(session){
+    redirect("/advertise")
+  }
 
   return (
     <main className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-slate-50">
