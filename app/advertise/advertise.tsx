@@ -5,7 +5,9 @@ import { CiPaperplane } from "react-icons/ci";
 import * as Yup from "yup";
 import { Theme } from "@/components/Theme";
 
-export default function Advertise() {
+export default function Advertise({session}) {
+  console.log(session);
+  
   const initVal = {
     name: "",
     cat: "",
@@ -45,7 +47,13 @@ export default function Advertise() {
             initialValues={initVal}
             validationSchema={valSchema}
             onSubmit={(values) => {
-              console.log(values);
+              const data = {
+                author: session?.user?.name || "User",
+                // authorImg: session?.user?.image,
+                timestamp: new Date().toLocaleTimeString(),
+                ...values
+              }
+              console.log(data);              
             }}
           >
             <Form className="space-y-6">

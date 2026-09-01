@@ -9,7 +9,7 @@ export default async function Page () {
     }
     return (
         <main>
-            <Advertise/>
+            <Advertise session={session}/>
         </main>
     )
 }
