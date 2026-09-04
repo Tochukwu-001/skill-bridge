@@ -15,7 +15,7 @@ export default function Navbar() {
   // console.log(navOpen);
 
   const { data: session } = useSession();
-  console.log(session);
+  // console.log(session);
 
   const navItems: object[] = [
     {
