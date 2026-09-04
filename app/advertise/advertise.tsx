@@ -4,10 +4,12 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import { CiPaperplane } from "react-icons/ci";
 import * as Yup from "yup";
 import { Theme } from "@/components/Theme";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/config/firebase";
 
-export default function Advertise({session}) {
+export default function Advertise({ session }) {
   console.log(session);
-  
+
   const initVal = {
     name: "",
     cat: "",
@@ -37,7 +39,8 @@ export default function Advertise({session}) {
             Post a Skill
           </h1>
           <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto">
-            Share your expertise with the SkillBridge community, highlight related job roles, and share helpful resource links.
+            Share your expertise with the SkillBridge community, highlight
+            related job roles, and share helpful resource links.
           </p>
         </div>
 
@@ -46,14 +49,15 @@ export default function Advertise({session}) {
           <Formik
             initialValues={initVal}
             validationSchema={valSchema}
-            onSubmit={(values) => {
+            onSubmit= {async (values) => {
               const data = {
                 author: session?.user?.name || "User",
                 // authorImg: session?.user?.image,
                 timestamp: new Date().toLocaleTimeString(),
-                ...values
-              }
-              console.log(data);              
+                userId: session?.user?.id,
+                ...values,
+              };
+              const docRef = await addDoc(collection(db, "skills"), data);
             }}
           >
             <Form className="space-y-6">
