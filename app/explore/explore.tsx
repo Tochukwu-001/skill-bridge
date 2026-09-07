@@ -8,8 +8,9 @@ import {
   FaExternalLinkAlt,
   FaBriefcase,
   FaRegClock,
+  FaTrash,
 } from "react-icons/fa";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/config/firebase";
 
 // Mock data to demonstrate the UI
@@ -81,13 +82,13 @@ export default function Explore({ session }) {
           id: doc.id,
           ...doc.data(),
         };
-        skillArr.push(skillObj)
+        skillArr.push(skillObj);
         console.log(skillArr);
       });
 
-      setSkills(skillArr)
+      setSkills(skillArr);
     };
-    
+
     useEffect(() => {
       handleFetch();
     }, [skills]);
@@ -95,6 +96,15 @@ export default function Explore({ session }) {
     console.error("An error occurred", error);
     alert("An error occurred");
   }
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteDoc(doc(db, "skills", id));
+      setSkills((prev) => prev.filter((skill: any) => skill.id !== id));
+    } catch (error) {
+      console.error("An error occurred while deleting:", error);
+    }
+  };
 
   // Filter logic
   const filteredSkills = MOCK_SKILLS.filter((skill) => {
@@ -177,15 +187,26 @@ export default function Explore({ session }) {
                     </div>
                   </div>
                 </div>
-                <span
-                  className="px-3 py-1 rounded-full text-xs font-semibold"
-                  style={{
-                    backgroundColor: `${Theme.lightYellow}40`,
-                    color: Theme.darkGreen,
-                  }}
-                >
-                  {skill.skillCategory}
-                </span>
+
+                <div className="flex items-center gap-2">
+                  <span
+                    className="px-3 py-1 rounded-full text-xs font-semibold"
+                    style={{
+                      backgroundColor: `${Theme.lightYellow}40`,
+                      color: Theme.darkGreen,
+                    }}
+                  >
+                    {skill.skillCategory}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(skill.id)}
+                    className="p-1.5 text-slate-400 hover:text-red-600 transition-colors"
+                    title="Delete Skill"
+                  >
+                    <FaTrash className="text-xs" />
+                  </button>
+                </div>
               </div>
 
               {/* Card Body: Skill Details */}
@@ -231,7 +252,7 @@ export default function Explore({ session }) {
                     color: Theme.lightYellow,
                   }}
                 >
-                  <span>View Portfolio</span>
+                  <span>View Details</span>
                   <FaExternalLinkAlt className="text-xs" />
                 </Link>
               </div>

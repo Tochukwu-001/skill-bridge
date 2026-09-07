@@ -28,7 +28,7 @@ export default function Advertise({ session }) {
   });
 
   return (
-    <main className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-8">
         {/* Header */}
         <div className="text-center space-y-3">
@@ -99,16 +99,16 @@ export default function Advertise({ session }) {
                   <option value="" disabled>
                     Select a category
                   </option>
-                  <option value="it">Information Technology</option>
-                  <option value="agric">Agriculture</option>
-                  <option value="sandm">Sales and Marketing</option>
-                  <option value="fin">Finance</option>
-                  <option value="med">Medicine and Health Care</option>
-                  <option value="eng">Engineering</option>
-                  <option value="tp">Transportation and Logistics</option>
-                  <option value="writing">Technical Writing</option>
-                  <option value="hr">Resource Management</option>
-                  <option value="pubs">Public Speaking</option>
+                  <option value="Information Technology">Information Technology</option>
+                  <option value="Agriculture">Agriculture</option>
+                  <option value="Sales and Marketing">Sales and Marketing</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Medicine and Health Care">Medicine and Health Care</option>
+                  <option value="Engineering">Engineering</option>
+                  <option value="Transportation and Logistics">Transportation and Logistics</option>
+                  <option value="Technical Writing">Technical Writing</option>
+                  <option value="Resource Management">Resource Management</option>
+                  <option value="Public Speaking">Public Speaking</option>
                   <option value="other">Other</option>
                 </Field>
                 <ErrorMessage
