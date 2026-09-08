@@ -29,6 +29,8 @@ export default function Explore({ session }: { session?: any }) {
   const [skills, setSkills] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  console.log(session?.user?.id);
+
   // Fetch skills from Firestore
   useEffect(() => {
     const handleFetch = async () => {
@@ -43,25 +45,29 @@ export default function Explore({ session }: { session?: any }) {
           const skillObj = {
             id: docSnap.id,
             authorName: data.author || "Anonymous",
-            authorImage: data.authorImage || `https://i.pravatar.cc/150?u=${docSnap.id}`,
+            authorImage:
+              data.authorImage || `https://i.pravatar.cc/150?u=${docSnap.id}`,
             timestamp: data.timestamp || "Recently",
-            skillName: data.name|| "Untitled Skill",
+            userId: data.userId,
+            skillName: data.name || "Untitled Skill",
             skillCategory: data.cat || "General",
             skillDescription: data.desc || "",
             additionalLink: data.res || "#",
             jobOpportunities: Array.isArray(data.job)
               ? data.job
               : data.job
-              ? [data.job]
-              : Array.isArray(data.jobOpportunities)
-              ? data.jobOpportunities
-              : [],
+                ? [data.job]
+                : Array.isArray(data.jobOpportunities)
+                  ? data.jobOpportunities
+                  : [],
           };
 
           skillArr.push(skillObj);
         });
 
         setSkills(skillArr);
+        console.log(skillArr);
+        
       } catch (error) {
         console.error("An error occurred while fetching skills:", error);
       } finally {
@@ -179,14 +185,16 @@ export default function Explore({ session }: { session?: any }) {
                     >
                       {skill.skillCategory}
                     </span>
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(skill.id)}
-                      className="p-1.5 text-slate-400 hover:text-red-600 transition-colors"
-                      title="Delete Skill"
-                    >
-                      <FaTrash className="text-xs" />
-                    </button>
+                    {session?.user?.id == skill.userId && (
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(skill.id)}
+                        className="p-1.5 text-slate-400 hover:text-red-600 transition-colors"
+                        title="Delete Skill"
+                      >
+                        <FaTrash className="text-xs" />
+                      </button>
+                    )}
                   </div>
                 </div>
 
@@ -212,21 +220,22 @@ export default function Explore({ session }: { session?: any }) {
                       Opportunities
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                      {skill.jobOpportunities.map((job: string, idx: number) => (
-                        <span
-                          key={idx}
-                          className="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md text-xs font-medium border border-slate-200"
-                        >
-                          {job}
-                        </span>
-                      ))}
+                      {skill.jobOpportunities.map(
+                        (job: string, idx: number) => (
+                          <span
+                            key={idx}
+                            className="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md text-xs font-medium border border-slate-200"
+                          >
+                            {job}
+                          </span>
+                        ),
+                      )}
                     </div>
                   </div>
 
                   {/* Additional Link */}
                   <Link
-                    href={skill.additionalLink}
-                    target="_blank"
+                    href={`/explore/${skill.id}`}
                     className="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-bold transition-transform active:scale-[0.98]"
                     style={{
                       backgroundColor: Theme.darkGreen,

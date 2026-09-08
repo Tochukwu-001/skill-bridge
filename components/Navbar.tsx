@@ -10,14 +10,17 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
+interface NavItem {
+  label: string;
+  url: string;
+}
+
 export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
-  // console.log(navOpen);
 
   const { data: session } = useSession();
-  // console.log(session);
 
-  const navItems: object[] = [
+  const navItems: NavItem[] = [
     {
       label: "Home",
       url: "/",
@@ -65,10 +68,10 @@ export default function Navbar() {
         {navItems.map((item, index) => (
           <Link
             key={index}
-            href={item?.url}
+            href={item.url}
             className="text-xl hover:text-[#2E2910] transition-all duration-200"
           >
-            {item?.label}
+            {item.label}
           </Link>
         ))}
       </div>
@@ -88,7 +91,10 @@ export default function Navbar() {
               aria-expanded={open}
               onClick={handleClick}
             >
-              <Avatar alt={session?.user?.name} src={session?.user?.image} />
+              <Avatar
+                alt={session?.user?.name || ""}
+                src={session?.user?.image || undefined}
+              />
             </button>
             <Menu
               id={menuId}
@@ -107,8 +113,13 @@ export default function Navbar() {
               <MenuItem onClick={handleClose}>
                 <Link href={"/advertise"}>Make Post</Link>
               </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <button onClick={()=> signOut()}>Log Out</button>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  signOut();
+                }}
+              >
+                Log Out
               </MenuItem>
             </Menu>
           </div>
@@ -137,7 +148,12 @@ export default function Navbar() {
       >
         <article className="flex flex-col gap-6 items-center">
           {navItems.map((item, i) => (
-            <Link key={i} href={item.url} className="text-2xl">
+            <Link
+              key={i}
+              href={item.url}
+              className="text-2xl"
+              onClick={() => setNavOpen(false)}
+            >
               {item.label}
             </Link>
           ))}
@@ -146,16 +162,39 @@ export default function Navbar() {
           <Link
             href={"/advertise"}
             className="text-2xl border px-3 rounded-sm py-1 hover:bg-[#EBE3A7] transition-all duration-200"
+            onClick={() => setNavOpen(false)}
           >
             Advertise Skills
           </Link>
-          <Link
-            href={"/auth"}
-            className="flex items-center text-2xl gap-1 bg-[#2E2910] text-white px-3 rounded-sm border border-[#2E2910] py-1 group"
-          >
-            <FiUser className="group-hover:-translate-x-0.5 transition-all duration-200" />{" "}
-            Register
-          </Link>
+          {session ? (
+            <div className="flex flex-col items-center gap-5">
+              <Link
+                href={"/profile"}
+                className="text-2xl"
+                onClick={() => setNavOpen(false)}
+              >
+                My Profile
+              </Link>
+              <button
+                onClick={() => {
+                  setNavOpen(false);
+                  signOut();
+                }}
+                className="flex items-center text-2xl gap-1 bg-[#2E2910] text-white px-3 rounded-sm border border-[#2E2910] py-1"
+              >
+                Log Out
+              </button>
+            </div>
+          ) : (
+            <Link
+              href={"/auth"}
+              className="flex items-center text-2xl gap-1 bg-[#2E2910] text-white px-3 rounded-sm border border-[#2E2910] py-1 group"
+              onClick={() => setNavOpen(false)}
+            >
+              <FiUser className="group-hover:-translate-x-0.5 transition-all duration-200" />{" "}
+              Register
+            </Link>
+          )}
         </div>
       </div>
     </main>

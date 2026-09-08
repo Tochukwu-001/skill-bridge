@@ -22,9 +22,7 @@ const style = {
   p: 4,
 };
 
-export default function Advertise({ session }) {
-  console.log(session);
-
+export default function Advertise({ session }: { session?: any }) {
   const [sending, setSending] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -71,17 +69,22 @@ export default function Advertise({ session }) {
             validationSchema={valSchema}
             onSubmit={async (values, { resetForm }) => {
               setSending(true);
-              const data = {
-                author: session?.user?.name || "User",
-                // authorImg: session?.user?.image,
-                timestamp: new Date().toLocaleTimeString(),
-                userId: session?.user?.id,
-                ...values,
-              };
-              const docRef = await addDoc(collection(db, "skills"), data);
-              setSending(false)
-              resetForm()
-              handleOpen()
+              try {
+                const data = {
+                  author: session?.user?.name || "User",
+                  authorImage: session?.user?.image || "",
+                  timestamp: new Date().toLocaleTimeString(),
+                  userId: session?.user?.id || "",
+                  ...values,
+                };
+                await addDoc(collection(db, "skills"), data);
+                setSending(false);
+                resetForm();
+                handleOpen();
+              } catch (error) {
+                console.error("Error adding skill:", error);
+                setSending(false);
+              }
             }}
           >
             <Form className="space-y-6">
@@ -250,12 +253,12 @@ export default function Advertise({ session }) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2" className="text-center">
-              Skill Sucessfully Posted
+          <Box sx={style} className="rounded-2xl outline-none">
+            <Typography id="modal-modal-title" variant="h6" component="h2" className="text-center font-bold text-slate-900">
+              Skill Successfully Posted
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                <CiCircleCheck className="text-green-600 text-8xl mx-auto" />
+              <CiCircleCheck className="text-green-600 text-8xl mx-auto" />
             </Typography>
           </Box>
         </Modal>
